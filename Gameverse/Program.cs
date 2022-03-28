@@ -3,16 +3,30 @@ using Gameverse.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      builder =>
+                      {
+                          builder.WithOrigins("https://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                      });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSqlite<UserContext>("Data Source=GameverseDatabase.db");
+builder.Services.AddSqlite<GameverseContext>("Data Source=GameverseDatabase.db");
 
 
 // Add the PromotionsContext
 
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ProductsService>();
+builder.Services.AddScoped<ShoppingCartsService>();
 
 var app = builder.Build();
 

@@ -9,9 +9,11 @@ public class User
     [Required]
     [MaxLength(100)]
     public string? Name { get; set; }
-    public string? Email { get; set; }
+    public string Email { get; set; }
     public string? Phone { get; set; }
     public string? Address { get; set; }
-
+    public string Password {get; set;}
     public Role? Role { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore]
+    public ICollection<ProductShoppingCart>? ProductShoppingCarts {get; set;}
 }
