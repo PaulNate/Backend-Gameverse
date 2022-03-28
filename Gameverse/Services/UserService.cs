@@ -16,12 +16,19 @@ public class UserService
     public User? GetById(int id)
     {
         var user = _context.Users
-            .Include(p => p.Id)
             .AsNoTracking()
             .SingleOrDefault(p => p.Id == id);
         return user;
     }
 
+    public User? GetUserExists(string email, string password)
+    {
+        var user = _context.Users
+        .AsNoTracking()
+        .SingleOrDefault(p => p.Email == email && p.Password == password);
+
+        return user;
+    }
     public User Create(User newUser)
     {
         _context.Users.Add(newUser);

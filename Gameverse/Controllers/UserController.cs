@@ -31,6 +31,21 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpGet("check")]
+    public ActionResult<User> GetUserExists( string email, string password)
+    {
+        var user = _service.GetUserExists(email, password);
+
+        if(user is not null)
+        {
+            return user;
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+
     [HttpGet("roles")]
     public IEnumerable<Role> GetRoles()
     {

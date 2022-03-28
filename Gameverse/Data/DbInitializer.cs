@@ -22,12 +22,14 @@ namespace Gameverse.Data
                 { 
                     Name = "Paul Nate",
                     Email = "paulnate80@yahoo.com",
+                    Password = "test123",
                     Role = adminRole
                 },
                 new User
                 { 
-                    Name = "George B", 
+                    Name = "George B",
                     Email = "georgeb35@gmail.com",
+                    Password = "test123",
                     Role = customerRole
                 }
             };
