@@ -16,6 +16,7 @@ public class UserService
     public User? GetById(int id)
     {
         var user = _context.Users
+            .Include(p => p.Role)
             .AsNoTracking()
             .SingleOrDefault(p => p.Id == id);
         return user;
