@@ -17,5 +17,6 @@ public class Product
     public double Price { get; set; }
     [Required]
     public Category Category { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore]
     public ICollection<ProductShoppingCart> ProductShoppingCarts {get;set;}
 }

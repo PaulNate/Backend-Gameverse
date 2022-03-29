@@ -16,16 +16,22 @@ public class ProductsService
     public Product? GetById(int id)
     {
         var product = _context.Products
+            .Include(p => p.Category)
             .AsNoTracking()
             .SingleOrDefault(p => p.ProductId == id);
         return product;
     }
-    public Product Create(Product newProduct)
+    public Product Create(ProductDto newProduct)
     {
-        _context.Products.Add(newProduct);
+        var product = new Product();
+        product.Name = newProduct.Name;
+        product.Price = newProduct.Price;
+        product.Description = newProduct.Description;
+        product.Category = _context.Categories.Find(newProduct.CategoryId);
+        _context.Products.Add(product);
         _context.SaveChanges();
 
-        return newProduct;
+        return product;
     }
     public IEnumerable<Product> GetProducts()
     {
@@ -78,5 +84,32 @@ public class ProductsService
             _context.Products.Remove(productToDelete);
             _context.SaveChanges();
         }        
+    }
+
+    public Product UpdateProduct(int id, ProductDto newProduct)
+    {
+        var productToUpdate = _context.Products.Find(id);
+
+        if(newProduct.Name != null)
+        {
+            productToUpdate.Name = newProduct.Name;
+        }
+        if(newProduct.Description != null)
+        {
+            productToUpdate.Description = newProduct.Description;
+        }
+        if(newProduct.Price != null)
+        {
+            productToUpdate.Price = newProduct.Price;
+        }
+        if(newProduct.Quantity != null)
+        {
+            productToUpdate.Quantity = newProduct.Quantity;
+        }
+
+        _context.Products.Update(productToUpdate);
+        _context.SaveChanges();
+
+        return productToUpdate;
     }
 }

@@ -52,7 +52,7 @@ public class ProductsController : ControllerBase
         return Products;
     }
     [HttpPost]
-    public IActionResult Create([FromBody] Product newProduct)
+    public IActionResult Create([FromBody] ProductDto newProduct)
     {
         var product = _service.Create(newProduct);
         return CreatedAtAction(nameof(GetById), new { id = product!.ProductId }, product);
@@ -86,5 +86,13 @@ public class ProductsController : ControllerBase
         {
             return NotFound();
         }
+    }
+
+    [HttpPut("{id}")]
+    public ActionResult<Product> UpdateProduct(int id, [FromBody]ProductDto newProduct)
+    {
+        var product = _service.UpdateProduct(id, newProduct);
+
+        return product;
     }
 }

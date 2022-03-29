@@ -16,6 +16,7 @@ public class UserService
     public User? GetById(int id)
     {
         var user = _context.Users
+            .Include(p => p.Role)
             .AsNoTracking()
             .SingleOrDefault(p => p.Id == id);
         return user;
@@ -29,12 +30,17 @@ public class UserService
 
         return user;
     }
-    public User Create(User newUser)
+    public User Create(UserDto newUser)
     {
-        _context.Users.Add(newUser);
+        var user = new User();
+        user.Name = newUser.Name;
+        user.Email = newUser.Email;
+        user.Password = newUser.Password;
+        user.Role = _context.Roles.Find(newUser.roleId);
+        _context.Users.Add(user);
         _context.SaveChanges();
 
-        return newUser;
+        return user;
     }
 
    public void SetRole(int UserId, int RoleId)
