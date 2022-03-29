@@ -19,4 +19,5 @@ public class Product
     public Category Category { get; set; }
     [System.Text.Json.Serialization.JsonIgnore]
     public ICollection<ProductShoppingCart> ProductShoppingCarts {get;set;}
+    public ICollection<Review> Reviews {get; set;}
 }

@@ -12,4 +12,5 @@ public class ProductDto
     public string? Description { get; set; }
     public double Price { get; set; }
     public int CategoryId { get; set; }
+    public ICollection<Review>? Reviews {get; set;}
 }

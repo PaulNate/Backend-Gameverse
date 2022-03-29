@@ -95,4 +95,18 @@ public class ProductsController : ControllerBase
 
         return product;
     }
+
+    [HttpGet("grade/{productId}")]
+    public double GetAverageReview(int ProductId)
+    {
+        var averageReview = _service.GetAverageReview(ProductId);
+        return averageReview;
+    }
+
+    [HttpGet("sortedByReview")]
+    public IEnumerable<Product> GetProductsByAverageReview()
+    {
+        var sorted_products = _service.GetProductsByAverageReview();
+        return sorted_products;
+    }
 }

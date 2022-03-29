@@ -27,6 +27,7 @@ builder.Services.AddSqlite<GameverseContext>("Data Source=GameverseDatabase.db")
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProductsService>();
 builder.Services.AddScoped<ShoppingCartsService>();
+builder.Services.AddScoped<ReviewService>();
 
 var app = builder.Build();
 
