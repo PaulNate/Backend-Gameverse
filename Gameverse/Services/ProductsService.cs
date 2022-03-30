@@ -132,4 +132,11 @@ public class ProductsService
             .Average(p => p.Grade));
         return products;
     }
+    public IEnumerable<Review> GetReviewsByProductId(int ProductId)
+    {
+        var reviews = _context.Reviews
+        .Where(r => r.Product.ProductId == ProductId).ToList();
+        return reviews;
+    }
+
 }

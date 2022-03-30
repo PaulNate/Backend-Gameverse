@@ -109,4 +109,12 @@ public class ProductsController : ControllerBase
         var sorted_products = _service.GetProductsByAverageReview();
         return sorted_products;
     }
+
+    [HttpGet("{id}/reviews")]
+    public IEnumerable<Review> GetReviewsByProductId([FromRoute] int id)
+    {
+        var reviews = _service.GetReviewsByProductId(id);
+
+        return reviews;
+    }
 }
