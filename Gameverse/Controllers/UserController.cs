@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("check")]
-    public ActionResult<User> GetUserExists( string email, string password)
+    public ActionResult<User> GetUserExists(string email, string password)
     {
         var user = _service.GetUserExists(email, password);
 
