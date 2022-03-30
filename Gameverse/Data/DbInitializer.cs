@@ -39,6 +39,57 @@ namespace Gameverse.Data
             var gameCategory = new Category { Name="Game"};
             var mediaCategory = new Category { Name="Media"};
 
+
+            var reviews = new Review[]
+            {
+                new Review
+                {
+                    Grade = 3,
+                    ReviewText = "Shitty",
+                    
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Not Shitty",
+                    
+                }
+            };
+
+            var reviews2 = new Review[]
+            {
+                new Review
+                {
+                    Grade = 4,
+                    ReviewText = "Shitty",
+                    
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Not Shitty",
+                    
+                }
+            };
+
+            var reviews3 = new Review[]
+            {
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Shitty",
+                    
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Not Shitty",
+                    
+                }
+            };
+
+            context.Reviews.AddRange(reviews);
+
             var products = new Product[]{
                 new Product
                 {
@@ -46,7 +97,8 @@ namespace Gameverse.Data
                     Quantity = 100,
                     Description = "Elden Ring is an action role-playing game developed by FromSoftware and published by Bandai Namco Entertainment. The game was directed by Hidetaka Miyazaki and made in collaboration with fantasy novelist George R. R. Martin, who provided material for the game's setting. It was released for Microsoft Windows, PlayStation 4, PlayStation 5, Xbox One, and Xbox Series X/S on February 25, 2022.",
                     Price = 59.99,
-                    Category = gameCategory
+                    Category = gameCategory,
+                    Reviews = reviews
                 },
                 new Product
                 {
@@ -54,7 +106,8 @@ namespace Gameverse.Data
                     Quantity = 100,
                     Description = "Pirates and Knights is an adventure role-playing game developed by NP Studios.",
                     Price = 20.00,
-                    Category = gameCategory
+                    Category = gameCategory,
+                    Reviews = reviews2
                 },
                 new Product
                 {
@@ -64,7 +117,8 @@ namespace Gameverse.Data
                     +"Gameplay is focused on stealth, exploration, and combat, with a particular emphasis on boss battles. The game takes place in a fictionalized Japan during the Sengoku period and makes strong references to Buddhist mythology and philosophy. While making the game, lead director Hidetaka Miyazaki wanted to create a new intellectual property (IP) that marked a departure from the Souls series of games also made by FromSoftware. The developers looked to games such as The Mysterious Murasame Castle and the Tenchu series for inspiration."
                     +"Sekiro was praised by critics, who complimented its gameplay and setting, and compared it to the Souls games, although opinions on its difficulty were mixed. It was nominated for various awards and won several, including The Game Award for Game of the Year. The game sold over five million copies by July 2020.",
                     Price = 30.00,
-                    Category = gameCategory
+                    Category = gameCategory,
+                    Reviews = reviews3
                 },
                 new Product
                 {
@@ -76,8 +130,12 @@ namespace Gameverse.Data
                 }
             };
 
-            context.Products.AddRange(products);
             
+
+            
+
+            
+            context.Products.AddRange(products);
             context.SaveChanges();
         }
     }

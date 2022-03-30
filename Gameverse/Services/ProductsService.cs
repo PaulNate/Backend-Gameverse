@@ -112,4 +112,31 @@ public class ProductsService
 
         return productToUpdate;
     }
+
+    public double GetAverageReview(int productId)
+    {   
+        var productToCompute = _context.Products.Include(p => p.Reviews).FirstOrDefault(p => p.ProductId == productId);
+    
+        if(productToCompute != null && productToCompute.Reviews != null)
+        {
+            return productToCompute.Reviews.Average(a => a.Grade);
+        }
+        throw new NullReferenceException("Error");
+    }
+
+    public IEnumerable<Product> GetProductsByAverageReview()
+    {
+        var products = _context.Products
+            .Include(p => p.Reviews)
+            .OrderByDescending(p => p.Reviews
+            .Average(p => p.Grade));
+        return products;
+    }
+    public IEnumerable<Review> GetReviewsByProductId(int ProductId)
+    {
+        var reviews = _context.Reviews
+        .Where(r => r.Product.ProductId == ProductId).ToList();
+        return reviews;
+    }
+
 }
