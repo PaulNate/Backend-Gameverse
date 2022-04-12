@@ -15,6 +15,7 @@ public class GameverseContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
+    public DbSet<Review> Reviews => Set<Review>();
     //public DbSet<ProductShoppingCart> ProductShoppingCarts { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

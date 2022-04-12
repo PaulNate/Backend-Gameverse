@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("check")]
-    public ActionResult<User> GetUserExists( string email, string password)
+    public ActionResult<User> GetUserExists(string email, string password)
     {
         var user = _service.GetUserExists(email, password);
 
@@ -55,7 +55,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] User newUser)
+    public IActionResult Create([FromBody] UserDto newUser)
     {
         var user = _service.Create(newUser);
         return CreatedAtAction(nameof(GetById), new { id = user!.Id }, user);

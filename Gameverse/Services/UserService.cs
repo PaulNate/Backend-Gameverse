@@ -25,17 +25,25 @@ public class UserService
     public User? GetUserExists(string email, string password)
     {
         var user = _context.Users
+        .Include(p => p.Role)
         .AsNoTracking()
         .SingleOrDefault(p => p.Email == email && p.Password == password);
 
         return user;
     }
-    public User Create(User newUser)
+    public User Create(UserDto newUser)
     {
-        _context.Users.Add(newUser);
+        var user = new User();
+        user.Name = newUser.Name;
+        user.Email = newUser.Email;
+        user.Address = newUser.Address;
+        user.Phone = newUser.Phone;
+        user.Password = newUser.Password;
+        user.Role = _context.Roles.Find(newUser.roleId);
+        _context.Users.Add(user);
         _context.SaveChanges();
 
-        return newUser;
+        return user;
     }
 
    public void SetRole(int UserId, int RoleId)
