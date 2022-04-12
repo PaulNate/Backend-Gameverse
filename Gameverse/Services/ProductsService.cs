@@ -129,7 +129,7 @@ public class ProductsService
         var products = _context.Products
             .Include(p => p.Reviews)
             .OrderByDescending(p => p.Reviews
-            .Average(p => p.Grade));
+                .Average(p => p.Grade));
         return products;
     }
     public IEnumerable<Review> GetReviewsByProductId(int ProductId)
@@ -137,6 +137,31 @@ public class ProductsService
         var reviews = _context.Reviews
         .Where(r => r.Product.ProductId == ProductId).ToList();
         return reviews;
+    }
+
+    public Product GetRandomGame()
+    {
+        Random random = new Random();
+        var games = _context.Products
+            .Include(p => p.Category)
+            .Where(p => p.Category.CategoryId == 1).ToList();
+        return games.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+    }
+
+    public Product GetRandomMedia()
+    {
+        var media = _context.Products
+            .Include(p => p.Category)
+            .Where(p => p.Category.CategoryId == 2).ToList();
+        return media.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
+    }
+
+    public Product GetRandomItem()
+    {
+        var items = _context.Products
+            .Include(p => p.Category)
+            .Where(p => (p.Category.CategoryId == 2) || (p.Category.CategoryId == 1)).ToList();
+        return items.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
     }
 
 }

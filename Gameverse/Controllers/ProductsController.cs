@@ -117,4 +117,25 @@ public class ProductsController : ControllerBase
 
         return reviews;
     }
+
+    [HttpGet("randomGame")]
+    public Product GetRandomGame()
+    {
+        var random_game = _service.GetRandomGame();
+        return random_game;
+    }
+
+    [HttpGet("randomMedia")]
+    public Product GetRandomMedia()
+    {
+        var random_media = _service.GetRandomMedia();
+        return random_media;
+    }
+
+    [HttpGet("randomItem")]
+    public Product GetRandomItem()
+    {
+        var random_item = _service.GetRandomItem();
+        return random_item;
+    }
 }
