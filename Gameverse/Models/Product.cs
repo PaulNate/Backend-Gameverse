@@ -20,6 +20,6 @@ public class Product
     [Required]
     public Category Category { get; set; }
     [System.Text.Json.Serialization.JsonIgnore]
-    public ICollection<ProductShoppingCart> ProductShoppingCarts {get;set;}
-    public ICollection<Review> Reviews {get; set;}
+    public ICollection<ProductShoppingCart>? ProductShoppingCarts { get; set; }
+    public ICollection<Review>? Reviews { get; set; }
 }

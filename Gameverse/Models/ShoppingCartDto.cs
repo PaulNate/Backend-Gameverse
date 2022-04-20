@@ -10,4 +10,5 @@ public class ShoppingCartDto
     public int? Price { get; set; }
     [Required]
     public int UserId { get; set; }
+    public List<ProductShoppingCart>? ProductShoppingCarts { get; set; }
 }
