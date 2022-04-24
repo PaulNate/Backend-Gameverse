@@ -5,11 +5,11 @@ namespace Gameverse.Data;
 
 public class GameverseContext : DbContext
 {
-    public GameverseContext (DbContextOptions<GameverseContext> options)
+    public GameverseContext(DbContextOptions<GameverseContext> options)
         : base(options)
     {
     }
-    
+
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<Product> Products => Set<Product>();
@@ -20,14 +20,18 @@ public class GameverseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ProductShoppingCart>()
-            .HasKey(bc => new { bc.ProductId, bc.ShoppingCartId });  
+            .HasKey(bc => new { bc.ProductId, bc.ShoppingCartId });
         modelBuilder.Entity<ProductShoppingCart>()
             .HasOne(bc => bc.Product)
             .WithMany(b => b.ProductShoppingCarts)
-            .HasForeignKey(bc => bc.ProductId);  
-        modelBuilder.Entity<ProductShoppingCart>()
-            .HasOne(bc => bc.ShoppingCart)
-            .WithMany(c => c.ProductShoppingCarts)
-            .HasForeignKey(bc => bc.ShoppingCartId);
+            .HasForeignKey(bc => bc.ProductId);
+        // modelBuilder.Entity<ProductShoppingCart>()
+        //     .HasOne(bc => bc.ShoppingCart)
+        //     .WithMany(c => c.ProductShoppingCarts)
+        //     .HasForeignKey(bc => bc.ShoppingCartId);
+        modelBuilder.Entity<User>()
+            .HasOne(b => b.shoppingCart)
+            .WithOne(b => b.User)
+            .HasForeignKey<ShoppingCart>(b => b.UserId);
     }
 }
