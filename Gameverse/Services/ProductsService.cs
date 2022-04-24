@@ -27,6 +27,8 @@ public class ProductsService
         product.Name = newProduct.Name;
         product.Price = newProduct.Price;
         product.Description = newProduct.Description;
+        product.Quantity = newProduct.Quantity;
+        product.ImageUrl = newProduct.ImageUrl;
         product.Category = _context.Categories.Find(newProduct.CategoryId);
         _context.Products.Add(product);
         _context.SaveChanges();
@@ -35,12 +37,17 @@ public class ProductsService
     }
     public IEnumerable<Product> GetProducts()
     {
-        var products = _context.Products.ToList();
+        var products = _context.Products
+        .Include(p=>p.Category)
+        .Include(p => p.Reviews)
+        .ToList();
         return products;
     }
     public IEnumerable<Product> GetByPriceMax(double price)
     {
         var products = _context.Products
+        .Include(p=>p.Category)
+        .Include(p => p.Reviews)
         .Where(x => x.Price <= price)
         .ToList();
         return products;
@@ -48,6 +55,8 @@ public class ProductsService
     public IEnumerable<Product> GetByCategory(int categoryId)
     {
         var products = _context.Products
+        .Include(p=>p.Category)
+        .Include(p => p.Reviews)
         .Where(c => c.Category.CategoryId == categoryId).ToList();
         return products;
     }
@@ -117,11 +126,14 @@ public class ProductsService
     {   
         var productToCompute = _context.Products.Include(p => p.Reviews).FirstOrDefault(p => p.ProductId == productId);
     
-        if(productToCompute != null && productToCompute.Reviews != null)
+        if(productToCompute.Reviews.Count() == 0){
+            return 0.0;
+        }
+        else if(productToCompute != null && productToCompute.Reviews != null)
         {
             return productToCompute.Reviews.Average(a => a.Grade);
         }
-        throw new NullReferenceException("Error");
+        return 0.0;
     }
 
     public IEnumerable<Product> GetProductsByAverageReview()
