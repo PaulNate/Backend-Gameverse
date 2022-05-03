@@ -99,6 +99,48 @@ namespace Gameverse.Data
                 }
             };
 
+            var reviews2 = new Review[]
+            {
+                new Review
+                {
+                    Grade = 4,
+                    ReviewText = "Not bad",
+
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "GG",
+
+                }
+            };
+
+            var reviews3 = new Review[]
+            {
+                new Review
+                {
+                    ReviewText = "Amazing gameplay!",
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Nice!",
+                },
+                new Review{
+                    Grade = 4,
+                    ReviewText = "Not Bad",
+                },
+                new Review
+                {
+                    Grade = 5,
+                    ReviewText = "Very good",
+                },
+                new Review{
+                    Grade = 1,
+                    ReviewText = "Very Bad",
+                }
+            };
+
 
             var products = new Product[]{
                 new Product
@@ -129,7 +171,8 @@ namespace Gameverse.Data
                     +"Sekiro was praised by critics, who complimented its gameplay and setting, and compared it to the Souls games, although opinions on its difficulty were mixed. It was nominated for various awards and won several, including The Game Award for Game of the Year. The game sold over five million copies by July 2020.",
                     Price = 30.00,
                     Category = gameCategory,
-                    ImageUrl = "https://fv9-3.failiem.lv/thumb_show.php?i=2en8tjmkg&view"
+                    ImageUrl = "https://fv9-3.failiem.lv/thumb_show.php?i=2en8tjmkg&view",
+                    Reviews = reviews3
                 },
                 new Product
                 {
@@ -165,7 +208,8 @@ namespace Gameverse.Data
                     Description = "A picture of a very cool bird",
                     Price = 10.00,
                     Category = mediaCategory,
-                    ImageUrl = "https://fv9-2.failiem.lv/thumb_show.php?i=b9r27dmsj&view"
+                    ImageUrl = "https://fv9-2.failiem.lv/thumb_show.php?i=b9r27dmsj&view",
+                    Reviews = reviews2
                 },
                 new Product
                 {
