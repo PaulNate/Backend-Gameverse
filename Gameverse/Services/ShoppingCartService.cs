@@ -27,16 +27,27 @@ public class ShoppingCartsService
     }
     public ShoppingCart Create(ShoppingCartDto shoppingCart)
     {
-        var newShoppingCart = new ShoppingCart()
+        var check = _context.ShoppingCarts
+            .Where(sc => sc.UserId == shoppingCart.UserId && sc.Done == false)
+            .Include(x => x.User)
+            .ThenInclude(x => x.Role)
+            .Include(x => x.Products)
+            .SingleOrDefault();
+        if (check == null)
         {
-            Price = 0,
-            User = _context.Users.Find(shoppingCart.UserId),
-            Products = new List<Product>()
-        };
-        _context.ShoppingCarts.Add(newShoppingCart);
-        _context.SaveChanges();
+            var newShoppingCart = new ShoppingCart()
+            {
+                Price = 0,
+                User = _context.Users.Find(shoppingCart.UserId),
+                Products = new List<Product>()
+            };
+            _context.ShoppingCarts.Add(newShoppingCart);
+            _context.SaveChanges();
 
-        return newShoppingCart;
+            return newShoppingCart;
+        }
+        return check;
+
     }
 
     public ShoppingCart AddProduct(int shoppingCartId, int productId, int Quantity)
@@ -53,15 +64,17 @@ public class ShoppingCartsService
             {
                 var product = _context.Products
                     .Include(p => p.Category)
-                    .Include(p => p.Reviews)
                     .SingleOrDefault(p => p.ProductId == productId);
                 if (product != null)
                 {
                     if (shoppingCart.Products.Contains(product))
                     {
+                        var productsList = shoppingCart.Products.ToList();
+                        var index = productsList.IndexOf(product);
+                        var oldQuantity = productsList[index].Quantity;
                         product.Quantity += Quantity;
                         shoppingCart.Products.Add(product);
-                        shoppingCart.Price += (double)product.Quantity * product.Price;
+                        shoppingCart.Price += ((double)product.Quantity * product.Price - (double)oldQuantity * product.Price);
                     }
                     else
                     {
@@ -173,5 +186,51 @@ public class ShoppingCartsService
         }
         _context.SaveChanges();
         return shoppingCart;
+    }
+
+    public ShoppingCart ApplyVoucher(int shoppingCartId, string voucherCode)
+    {
+        var shoppingCart = _context.ShoppingCarts
+           .Include(p => p.Products)
+           .Include(p => p.User)
+           .ThenInclude(u => u.Role)
+           .SingleOrDefault(p => p.ShoppingCartId == shoppingCartId);
+        var voucher = _context.Vouchers
+            .SingleOrDefault(v => v.Code == voucherCode);
+        if (shoppingCart != null)
+        {
+            if (voucher != null)
+            {
+                if (shoppingCart.Voucher == null)
+                {
+                    shoppingCart.Voucher = voucher;
+                    shoppingCart.Price -= shoppingCart.Price * voucher.Discount / 100;
+                }
+                else
+                {
+                    throw new NullReferenceException("You already applied a voucher!");
+                }
+            }
+            else
+            {
+                throw new NullReferenceException("Voucher doesn't exist");
+            }
+        }
+        else
+        {
+            throw new NullReferenceException("Shopping cart doesn't exist");
+        }
+        _context.SaveChanges();
+        return shoppingCart;
+    }
+
+    public IEnumerable<ShoppingCart> GetAllShoppingCart()
+    {
+        var shoppingCarts = _context.ShoppingCarts
+            .Include(sc => sc.User)
+            .ThenInclude(u => u.Role)
+            .Include(sc => sc.Products)
+            .ToList();
+        return shoppingCarts;
     }
 }

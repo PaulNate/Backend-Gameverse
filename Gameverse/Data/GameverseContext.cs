@@ -17,6 +17,7 @@ public class GameverseContext : DbContext
     public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
     public DbSet<Review> Reviews => Set<Review>();
     //public DbSet<ProductShoppingCart> ProductShoppingCarts { get; set; }
+    public DbSet<Voucher> Vouchers => Set<Voucher>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ProductShoppingCart>()
@@ -29,9 +30,9 @@ public class GameverseContext : DbContext
         //     .HasOne(bc => bc.ShoppingCart)
         //     .WithMany(c => c.ProductShoppingCarts)
         //     .HasForeignKey(bc => bc.ShoppingCartId);
-        modelBuilder.Entity<User>()
-            .HasOne(b => b.shoppingCart)
-            .WithOne(b => b.User)
-            .HasForeignKey<ShoppingCart>(b => b.UserId);
+        modelBuilder.Entity<ShoppingCart>()
+            .HasOne(b => b.User)
+            .WithMany(b => b.shoppingCart)
+            .HasForeignKey(b => b.UserId);
     }
 }
