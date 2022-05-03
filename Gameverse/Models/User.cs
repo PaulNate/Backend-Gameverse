@@ -15,5 +15,5 @@ public class User
     public string Password { get; set; }
     public Role? Role { get; set; }
     [System.Text.Json.Serialization.JsonIgnore]
-    public ShoppingCart shoppingCart { get; set; }
+    public ICollection<ShoppingCart> shoppingCart { get; set; }
 }

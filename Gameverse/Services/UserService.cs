@@ -46,7 +46,7 @@ public class UserService
         return user;
     }
 
-   public void SetRole(int UserId, int RoleId)
+    public void SetRole(int UserId, int RoleId)
     {
         var userToUpdate = _context.Users.Find(UserId);
         var roleToAdd = _context.Roles.Find(RoleId);
@@ -56,7 +56,7 @@ public class UserService
             throw new NullReferenceException("User or role does not exist");
         }
 
-        if(userToUpdate.Role is null)
+        if (userToUpdate.Role is null)
         {
             userToUpdate.Role = new Role();
         }
@@ -74,10 +74,11 @@ public class UserService
         {
             _context.Users.Remove(userToDelete);
             _context.SaveChanges();
-        }        
+        }
     }
 
-    public IEnumerable<Role> GetRoles(){
+    public IEnumerable<Role> GetRoles()
+    {
         var roles = _context.Roles.ToList();
         if (roles is null)
         {
@@ -85,5 +86,43 @@ public class UserService
         }
 
         return roles;
+    }
+
+    public IEnumerable<ShoppingCart> GetPurchaseHistory(int userId)
+    {
+        var shoppingCarts = _context.ShoppingCarts
+            .Include(p => p.Products)
+            .Include(p => p.User)
+            .ThenInclude(u => u.Role)
+            .Where(sc => sc.UserId == userId)
+            .Where(sc => sc.Price != 0)
+            .ToList();
+        if (shoppingCarts != null)
+        {
+            return shoppingCarts;
+        }
+        else
+        {
+            throw new NullReferenceException("Not found");
+        }
+    }
+
+    public ShoppingCart GetShoppingCartByUserId(int userId)
+    {
+        var shoppingCart = _context.ShoppingCarts
+            .Include(p => p.Products)
+            .Include(p => p.User)
+            .ThenInclude(u => u.Role)
+            .Where(sc => sc.UserId == userId)
+            .Where(sc => sc.Done == false)
+            .SingleOrDefault();
+        if (shoppingCart != null)
+        {
+            return shoppingCart;
+        }
+        else
+        {
+            throw new NullReferenceException("Not found");
+        }
     }
 }

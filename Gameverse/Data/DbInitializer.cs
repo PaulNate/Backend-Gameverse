@@ -13,13 +13,24 @@ namespace Gameverse.Data
                 return;   // DB has been seeded
             }
 
-            var adminRole = new Role { Name = "Admin"};
+            var adminRole = new Role { Name = "Admin" };
             var customerRole = new Role { Name = "Customer" };
+
+            var voucher_10 = new Voucher { VoucherId = 1, Code = "V10", Discount = 10 };
+            var voucher_20 = new Voucher { VoucherId = 2, Code = "V20", Discount = 20 };
+            var voucher_30 = new Voucher { VoucherId = 3, Code = "V30", Discount = 30 };
+            var voucher_50 = new Voucher { VoucherId = 4, Code = "V50", Discount = 50 };
+            var voucher_70 = new Voucher { VoucherId = 5, Code = "V70", Discount = 50 };
+
+            context.Vouchers.Add(voucher_10);
+            context.Vouchers.Add(voucher_20);
+            context.Vouchers.Add(voucher_30);
+            context.Vouchers.Add(voucher_50);
 
             var users = new User[]
             {
                 new User
-                { 
+                {
                     Name = "Paul Nate",
                     Email = "paulnate80@yahoo.com",
                     Password = "test123",
@@ -28,7 +39,7 @@ namespace Gameverse.Data
                     Role = adminRole
                 },
                 new User
-                { 
+                {
                     Name = "George B",
                     Email = "georgeb35@gmail.com",
                     Password = "test123",
@@ -37,7 +48,7 @@ namespace Gameverse.Data
                     Role = adminRole
                 },
                 new User
-                { 
+                {
                     Name = "Florina G",
                     Email = "florina@gmail.com",
                     Password = "test123",
@@ -46,7 +57,7 @@ namespace Gameverse.Data
                     Role = customerRole
                 },
                 new User
-                { 
+                {
                     Name = "Radu B",
                     Email = "radub@gmail.com",
                     Password = "test123",
@@ -55,7 +66,7 @@ namespace Gameverse.Data
                     Role = customerRole
                 },
                 new User
-                { 
+                {
                     Name = "Andrei D",
                     Email = "dumi@gmail.com",
                     Password = "test123",
@@ -67,8 +78,8 @@ namespace Gameverse.Data
 
             context.Users.AddRange(users);
 
-            var gameCategory = new Category { Name="Game"};
-            var mediaCategory = new Category { Name="Media"};
+            var gameCategory = new Category { Name = "Game" };
+            var mediaCategory = new Category { Name = "Media" };
 
             var reviews = new Review[]
             {
@@ -80,7 +91,7 @@ namespace Gameverse.Data
                 new Review
                 {
                     Grade = 5,
-                    ReviewText = "Amazing!",   
+                    ReviewText = "Amazing!",
                 },
                 new Review
                 {
