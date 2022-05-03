@@ -65,4 +65,20 @@ public class ShoppingCartController : ControllerBase
         var shoppingCart = _service.UpdateQuantity(shoppingCartId, productId, newQuantity);
         return shoppingCart;
     }
+
+    [HttpPut("applyVoucher")]
+    public ShoppingCart ApplyVoucher(int shoppingCartId, string voucherCode)
+    {
+        var shoppingCart = _service.ApplyVoucher(shoppingCartId, voucherCode);
+        return shoppingCart;
+    }
+
+    [HttpGet("getAllShoppingCarts")]
+    public IEnumerable<ShoppingCart> GetAllShoppingCart()
+    {
+        var shoppingCarts = _service.GetAllShoppingCart();
+        return shoppingCarts;
+    }
+
+   
 }
